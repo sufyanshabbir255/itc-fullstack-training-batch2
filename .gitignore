@@ -1,0 +1,14 @@
+# Virtual environment — rebuildable, never committed
+.venv/
+
+# Python bytecode cache
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store

@@ -45,8 +45,9 @@ while True:
             print(f'You won 100 credits!')
 
 
-    if roll[0] == roll[1] or roll[1] == roll[2]:
-        if roll[0] != roll[2]:
+    
+    if len(set(roll)) == 2:
+        if roll[0] == roll[1] or roll[1] == roll[2]:
             if roll[1] == 6:
                 credit -= 100
                 print(f'You lost 100 credits!')
@@ -54,7 +55,7 @@ while True:
                 credit += 50
                 print(f'You won 50 credits!')
 
-    if roll[0] != roll[1] and roll[1] != roll[2]:
+    if len(set(roll)) == 3:
         print(f'You won nothing!')
 
     continue_playing = input('Press enter to continue or [Q] to quit...')

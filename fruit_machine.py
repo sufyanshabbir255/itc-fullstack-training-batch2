@@ -23,11 +23,12 @@ def show_roll(roll):
     return f'You rolled: {result_dict[roll[0]]} {result_dict[roll[1]]} {result_dict[roll[2]]}.'
 
 credit = 100
+roll_cost = 20
 
 input('Press enter to pull the lever...')
 while True:
     print(f'\nCurrent balance: {credit}')
-    credit -= 20
+    credit -= roll_cost
 
     roll = (randint(1, 6), randint(1, 6), randint(1, 6))
     print(show_roll(roll))
@@ -58,11 +59,11 @@ while True:
     if len(set(roll)) == 3:
         print(f'You won nothing!')
 
-    continue_playing = input('Press enter to continue or [Q] to quit...')
-    if continue_playing.upper() == 'Q':
-        print(f'Thank you for playing.\nYou finished with {credit} credits!')
+    if credit < roll_cost:
+        print(f'Game over! You have {credit} credits.\nThank you for playing!\n\n')
         sys.exit()
 
-    if credit <= 0:
-        print('Game over! You have no credits left.\nThank you for playing!')
+    continue_playing = input('Press enter to continue or [Q] to quit...')
+    if continue_playing.upper() == 'Q':
+        print(f'Thank you for playing.\nYou finished with {credit} credits!\n\n')
         sys.exit()

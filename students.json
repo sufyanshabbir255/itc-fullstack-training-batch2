@@ -1,12 +1,1 @@
-{
-    "10": {
-        "name": "string",
-        "age": 25,
-        "course": "string"
-    },
-    "12": {
-        "name": "string",
-        "age": 32,
-        "course": "string"
-    }
-}
+{}

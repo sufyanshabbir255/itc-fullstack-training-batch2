@@ -79,7 +79,7 @@ app.include_router(api_router, prefix=settings.API_V1_PREFIX)
 # ---------------------------------------------------------------------------
 @app.get("/", tags=["Health"], summary="Welcome message")
 def root():
-    return {"message": "Welcome! Open /docs to explore the API."}
+    return {"message": "Welcome! Open /docs to explore the API"}
 
 
 @app.get(

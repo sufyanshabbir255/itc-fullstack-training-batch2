@@ -30,7 +30,14 @@ from fastapi import FastAPI, status
 
 from app.core.config import settings
 from app.db.fake_db import seed_data
-from app.routers import api_router
+from app.routers import (
+     api_router
+    ,items
+    ,users
+    ,headers_cookies
+    ,nested_body
+    ,uploads
+)
 
 
 # ---------------------------------------------------------------------------
@@ -71,7 +78,11 @@ app = FastAPI(
 
 # Plug in all versioned routes: /api/v1/items, /api/v1/users
 app.include_router(api_router, prefix=settings.API_V1_PREFIX)
-
+app.include_router(items.router)
+app.include_router(users.router)
+app.include_router(headers_cookies.router)
+app.include_router(nested_body.router)
+app.include_router(uploads.router)
 
 # ---------------------------------------------------------------------------
 # Routes can also be defined directly on `app` (no router) – fine for tiny

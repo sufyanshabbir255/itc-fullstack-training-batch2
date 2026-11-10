@@ -26,3 +26,6 @@ from app.routers import items, users
 api_router = APIRouter()
 api_router.include_router(items.router)
 api_router.include_router(users.router)
+
+from app.routers import extras  # added by Din
+api_router.include_router(extras.router)  # added by Din

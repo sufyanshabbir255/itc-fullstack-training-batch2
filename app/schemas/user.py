@@ -37,3 +37,19 @@ class UserOut(UserBase):
     is_active: bool = True
 
     model_config = ConfigDict(from_attributes=True)
+
+# added by Din: body for PUT /users/{user_id}
+# PUT replaces the WHOLE user, so every field is required again,
+# exactly like UserCreate. We just inherit from it.
+class UserUpdate(UserCreate):
+    pass
+
+
+# added by Din: body for PATCH /users/{user_id}
+# PATCH changes only SOME fields, so every field is optional (default None).
+class UserPatch(BaseModel):
+    username: str | None = Field(default=None, min_length=3, max_length=30)
+    email: EmailStr | None = None
+    full_name: str | None = None
+    password: str | None = Field(default=None, min_length=8)
+    is_active: bool | None = None

@@ -46,18 +46,20 @@ cd fastapi-learning
 **3. Create and activate a virtual environment**
 ```bash
 python3 -m venv venv
-source venv/bin/activate          # macOS / Linux
-# venv\Scripts\activate           # Windows
+#source venv/bin/activate          # macOS / Linux
+venv\Scripts\activate           # Windows
 ```
 
 **4. Install dependencies**
 ```bash
-pip install -r requirements.txt
+#pip install -r requirements.txt
+python -m pip install --upgrade pip
+pip install fastapi uvicorn email-validator httpx pytest
 ```
 
 **5. Start the server** (either command works)
 ```bash
-fastapi dev app/main.py
+#fastapi dev app/main.py
 # or
 uvicorn app.main:app --reload
 ```

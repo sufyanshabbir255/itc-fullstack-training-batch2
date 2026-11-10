@@ -14,7 +14,7 @@ THE KEY LESSON HERE: response_model protects sensitive data.
 """
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
-
+from typing import Optional
 
 class UserBase(BaseModel):
     username: str = Field(..., min_length=3, max_length=30, examples=["romesh"])
@@ -26,14 +26,26 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     """Request body for POST /users. Includes a plain-text password."""
-
     password: str = Field(..., min_length=8, examples=["supersecret123"])
-
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "username"  : "A_dog_that_sits"
+                ,"email"    : "john_doe@example.com"
+                ,"full_name": "Johnathan Doe"
+                ,"password" : "password"
+            }
+        }
+    )
 
 class UserOut(UserBase):
     """Response model: NO password fields at all."""
-
     id: int
     is_active: bool = True
-
     model_config = ConfigDict(from_attributes=True)
+
+class UserPatch(BaseModel):
+    username: Optional[str] = Field(defailt=None, min_length=3, max_length=30)
+    email: Optional[str] = Field(default=None)
+    password: Optional[str] = Field(default=None, min_length=8)
+    full_name: Optional[str] = None

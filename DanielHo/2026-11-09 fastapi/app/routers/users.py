@@ -13,7 +13,7 @@ Try it: comment out `response_model=UserOut` on create_user, restart, and
 POST a user. You will see `hashed_password` leak into the response.
 """
 
-from fastapi import APIRouter, HTTPException, Path, Response, status
+from fastapi import APIRouter, HTTPException, Path, Response, status, Depends
 
 from app.db.fake_db import (
     fake_hash_password,
@@ -27,9 +27,19 @@ from app.schemas.user import (
     UserPatch,
 )
 
+from app.core.dependencies import (
+    verify_admin,
+    verify_api_key,
+)
+
 router = APIRouter(
     prefix="/users",
     tags=["Users"],
+    # Router Dependency
+    # Accessing Users requires authorisation
+    dependencies=[
+        Depends(verify_api_key)
+    ]
 )
 
 
@@ -137,15 +147,28 @@ def patch_user(
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Delete a user account",
 )
+# Anyone can delete a user
+# def delete_user(
+#     user_id: int = Path(..., gt=0)
+# ):
+#     """Delete a user."""
+
+#     get_user_or_404(user_id)
+
+#     del users_db[user_id]
+
+#     return Response(
+#         status_code=status.HTTP_204_NO_CONTENT
+#     )
+
+# Local dependancy:
+# now requires admin key to delete users
 def delete_user(
-    user_id: int = Path(..., gt=0)
+    user_id: int = Path(..., gt=0),
+    _: None = Depends(verify_admin)
 ):
-    """Delete a user."""
-
     get_user_or_404(user_id)
-
     del users_db[user_id]
-
     return Response(
         status_code=status.HTTP_204_NO_CONTENT
     )

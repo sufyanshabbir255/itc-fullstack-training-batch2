@@ -31,6 +31,8 @@ from fastapi import FastAPI, status
 from app.core.config import settings
 from app.db.fake_db import seed_data
 from app.routers import api_router
+from fastapi import Depends  # added by Din
+from app.dependencies import log_request  # added by Din
 
 
 # ---------------------------------------------------------------------------
@@ -62,6 +64,7 @@ app = FastAPI(
     version=settings.APP_VERSION,
     openapi_tags=tags_metadata,
     lifespan=lifespan,
+    dependencies=[Depends(log_request)],  # added by Din: GLOBAL dependency
     # These are the defaults; change them to move or disable docs
     # (e.g. docs_url=None to hide Swagger in production).
     docs_url="/docs",

@@ -65,3 +65,10 @@ async def upload_file(file: UploadFile):
         "content_type": file.content_type,
         "size_in_bytes": len(contents),
     }
+
+from fastapi import Depends  # added by Din
+from app.dependencies import get_greeting  # added by Din
+
+@router.get("/greeting",summary = "Local dependency demo")
+def greeting(message:str = Depends(get_greeting)):
+    return{"message":message}

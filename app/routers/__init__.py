@@ -32,3 +32,6 @@ api_router.include_router(extras.router)  # added by Din
 
 from app.routers import secure  # added by Din
 api_router.include_router(secure.router)  # added by Din
+
+from app.routers import auth  # added by Din
+api_router.include_router(auth.router)  # added by Din

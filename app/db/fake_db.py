@@ -52,3 +52,5 @@ def seed_data() -> None:
             "in_stock": True,
             "created_at": datetime.now(timezone.utc),
         }
+
+refresh_tokens_db: dict[str, str] = {}  # added by Din: valid refresh token -> username        

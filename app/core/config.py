@@ -31,3 +31,19 @@ class Settings:
 
 # A single shared instance that the rest of the app imports.
 settings = Settings()
+
+# added by Din: read the secrets from the .env file
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class AuthSettings(BaseSettings):  # added by Din
+    SECRET_KEY: str
+    REFRESH_SECRET_KEY: str
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+
+    model_config = SettingsConfigDict(env_file=".env")
+
+
+auth_settings = AuthSettings()  # added by Din

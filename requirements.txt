@@ -10,3 +10,6 @@
 # ---------------------------------------------------------------
 fastapi[standard]>=0.115.0
 pytest>=8.0.0
+pyjwt  # added by Din
+bcrypt  # added by Din
+pydantic-settings  # added by Din

@@ -80,3 +80,23 @@ def refresh(body: RefreshRequest):
     # 4. DELETE the old token from the list, then make a NEW pair (which saves the new one)
     username = refresh_tokens_db.pop(body.refresh_token)
     return make_token_pair(username)
+
+# added by Din: WHO AM I - only works with a valid access token
+from app.dependencies import get_current_user
+
+
+@router.get("/me", response_model=UserOut)
+def read_me(current_user: dict = Depends(get_current_user)):
+    return current_user
+
+# added by Din: LOGOUT - revoke ALL of this user's refresh tokens
+from fastapi import Response
+
+
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+def logout(current_user: dict = Depends(get_current_user)):
+    username = current_user["username"]
+    for token, owner in list(refresh_tokens_db.items()):
+        if owner == username:
+            del refresh_tokens_db[token]
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

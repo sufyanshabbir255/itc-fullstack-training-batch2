@@ -1,0 +1,76 @@
+/* ---------- Page basics ---------- */
+
+    /* "*" = every element. Remove the browser's default spacing so we control it ourselves */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Whole page: default font, cream background, near-black text */
+    body { font-family: 'Inter', sans-serif; background: #FFFAF3; color: #1C1B19; }
+
+    /* All links: no underline, and use the same colour as the text around them */
+    a { text-decoration: none; color: inherit; }
+
+    /* ---------- Header (top bar) ---------- */
+
+    /* flex = put children side by side in a row.
+       space-between = logo pushed left, menu pushed right.
+       align-items: center = line them up vertically in the middle.
+       padding: 0 50px = no space top/bottom, 50px space left/right.
+       border-bottom = the thin line under the top bar */
+    header { display: flex; justify-content: space-between; align-items: center; height: 64px; padding: 0 50px; border-bottom: 1px solid #F0E8DC; }
+
+    /* "🍅 Simmer" logo: Poppins font, bigger and bold-ish */
+    .logo { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; }
+
+    /* Menu: links in a row with 28px gap between each one */
+    nav { display: flex; align-items: center; gap: 28px; }
+
+    /* Menu links: small grey text */
+    nav a { font-size: 14px; color: #6B6B6B; }
+
+    /* The current page link (Home): darker and slightly bolder */
+    nav a.active { color: #1C1B19; font-weight: 500; }
+
+    /* Green button style (used by "Surprise me" AND "Search").
+       border-radius: 999px = fully rounded ends (pill shape).
+       padding: 10px 18px = 10px space above/below the text, 18px left/right.
+       cursor: pointer = mouse turns into a hand when hovering */
+    .btn { background: #1B7A53; color: white; border: none; border-radius: 999px; padding: 10px 18px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+    /* Keeps "Surprise me" text white (otherwise the grey "nav a" rule above would win) */
+    nav a.btn { color: white; }
+
+    /* ---------- Middle section ---------- */
+
+    /* Whole middle section: everything centred.
+       padding: 48px 20px 40px = 48px top, 20px left/right, 40px bottom */
+    .middle { text-align: center; padding: 48px 20px 40px; }
+
+    /* "🔥 1000+ recipes, zero login" orange pill.
+       inline-block = only as wide as its text, but can have padding */
+    .badge { display: inline-block; background: #FDEBC8; color: #B4650B; font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 999px; }
+
+    /* Big heading. max-width: 600px forces it onto two lines.
+       margin: 20px auto = 20px above/below, "auto" left/right centres the block.
+       line-height: 1.1 = lines sit close together */
+    h1 { font-family: 'Poppins', sans-serif; font-size: 46px; font-weight: 700; line-height: 1.1; max-width: 600px; margin: 20px auto; }
+
+    /* Grey text under the heading, kept narrow (420px) and centred.
+       margin: 0 auto 24px = 0 top, auto left/right (centre), 24px bottom */
+    .subtitle { color: #5F5F5F; font-size: 15px; line-height: 1.5; max-width: 420px; margin: 0 auto 24px; }
+
+    /* White search box: emoji, input and button in a row.
+       box-shadow = the soft shadow underneath (0 left/right, 4px down, 14px blur, 6% black) */
+    .search { display: flex; align-items: center; gap: 10px; max-width: 480px; margin: 0 auto; background: white; border: 1px solid #ECE6DC; border-radius: 12px; padding: 6px 6px 6px 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+
+    /* The typing area. flex: 1 = stretch to fill the free space.
+       border/outline: none = hide the default box so it blends into the white search box */
+    .search input { flex: 1; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 14px; background: none; }
+
+    /* The Search button: less rounded (8px) and a bit bigger than "Surprise me" */
+    .search .btn { border-radius: 8px; padding: 12px 20px; }
+
+    /* "Popular:" row: label and chips in a centred row with 8px gaps */
+    .popular { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; font-size: 11px; color: #5F5F5F; }
+
+    /* Each green "chip" (Chicken, Pasta...). One rule styles all five */
+    .chip { background: #E4F0EA; color: #1C4D38; font-size: 12px; padding: 7px 13px; border-radius: 999px; }

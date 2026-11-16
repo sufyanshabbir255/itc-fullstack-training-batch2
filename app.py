@@ -35,7 +35,6 @@ def init_db():
 
 init_db()
 
-
 # Login / Signup Page
 @app.route("/")
 def index():

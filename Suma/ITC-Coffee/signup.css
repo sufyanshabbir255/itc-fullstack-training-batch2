@@ -1,0 +1,287 @@
+/* ITC CAFE - SIGNUP PAGE */
+body {
+margin: 0;
+padding: 5px,30px,5px;
+min-height: 100vh;
+box-sizing: border-box;
+font-family: georgia,serif;
+background: #ead5dc;
+color:#49352f;
+}
+/* Header */
+header {
+text-align: center;
+background-color:transparent;
+padding: 5px;
+}
+header h1 {
+color: #121112;
+font-size: 38px;
+font-weight: normal;
+font-style:italic;
+margin: 0;
+letter-spacing: 2px;
+}
+header p {
+font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+color: #c228c2;
+font-size: 23px;
+font-style: bold;
+margin: 5px;
+}
+
+/* Main layout */
+
+main {
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1250px;
+min-height: 400px;
+margin: 10px auto;
+padding: 20px;
+gap: 30px;
+background: #fff8f7;
+border-radius: 30px;
+box-shadow: 0 8px 25px rgba(150, 100, 120, 0.12);
+}
+/* Welcome section */
+
+.welcome {
+    flex:1;
+    width: 50%;
+    text-align: center;
+    padding: 30px;
+  
+}
+
+.welcome h2 {
+    font-size: 42px;
+    font-style: italic;
+    color:#131313;
+    font-weight: normal;
+    line-height: 1.2;
+    margin-bottom: 20px;
+
+}
+
+.welcome p {
+    font-size: 19px;
+    color: #55464f;
+    line-height: 1.6;
+    margin-bottom: 30px;
+
+}
+
+.welcome img {
+width: 100%;
+max-width: 500px;
+height: 300px;
+object-fit: cover;
+display: block;
+border-radius: 25px;
+border: 4px solid #e8c5df;
+box-shadow: 0 10px 25px rgba(120,70,100,0.15);
+margin-top: 20px;
+
+}
+
+/* Signup card */
+
+.signup {
+    flex:1;
+    max-width: 430px;
+
+background-color: #ffffff;
+padding: 20px;
+border: 1px solid #ead5e5;
+border-radius: 25px;
+text-align: center;
+box-shadow: 0 10px 30px rgba(150, 100, 130, 0.12);
+}
+
+.signup h2 {
+color: #9C668D;
+font-size: 23px;
+font-weight: normal;
+margin-bottom: 10px;
+}
+
+.signup input {
+width: 100%;
+padding: 15px;
+margin: 5px 0;
+border: 1px solid #ead5e5;
+border-radius: 25px;
+background-color: #fffafc;
+font-size: 15px;
+color: #49352f;
+box-sizing: border-box;
+outline: none;
+}
+.signup input:focus {
+border-color: #c58bb5;
+box-shadow: 0 0 8px rgba(197, 139, 181, 0.2);
+}
+
+.signup button {
+width: 100%;
+padding: 10px;
+margin-top: 20px;
+background-color: #c58bb5;
+color: white;
+border: none;
+border-radius: 30px;
+font-size: 16px;
+font-weight: bold;
+cursor: pointer;
+transition: 0.3s;
+}
+
+.signup button:hover {
+background-color: #9c668d;
+transform: translateY(-2px);
+}
+
+.signup a {
+color: #9C668D;
+text-decoration: none;
+font-weight: bold;
+}
+.signup a {
+color: #c58bb5;
+text-decoration: underline;
+}
+
+/* Mobile view */
+
+@media (max-width: 750px) {
+main {
+flex-direction: column;
+padding: 20px;
+}
+
+.welcome {
+width: 100%;
+}
+
+.signup {
+width: 70%;
+box-sizing: border-box;
+}
+}
+
+/* Coffee decorations */
+
+.coffee-art {
+font-size: 150px;
+margin-top: 20px;
+filter: drop-shadow(5px 8px 5px #c995a5);
+}
+
+.coffee-decor {
+font-size: 24px;
+text-align: center;
+width: 100%;
+margin: 15px;
+color: #795548;
+}
+
+.snowflakes {
+color: #101010;
+font-size: 28px;
+margin-bottom: 15px;
+}
+
+/* Extra decorative touches */
+
+.welcome {
+background: linear-gradient(
+to bottom,
+#fff0f5,
+#f8dce6
+);
+border-radius: 25px;
+padding: 25px;
+}
+
+.signup {
+border: 2px solid #f2c3d2;
+}
+
+.signup h2::before {
+content: " ♡ ";
+}
+
+.signup button::after {
+content: " ♡ ";
+}
+
+/* Navigation bar */
+
+nav {
+text-align: center;
+padding: 15px;
+background-color: #f8e1e8;
+margin-top: 10px;
+}
+
+nav a {
+color: #593b40;
+text-decoration: none;
+font-style: italic;
+font-size: 16px;
+font-weight: bold;
+margin: 0 20px;
+}
+
+nav a:hover {
+color: #c2185b;
+text-decoration: underline;
+}
+
+.signup {
+background-color: floralwhite;
+width: 350px;
+margin: 30px auto;
+padding: 30px;
+border-radius: 25px;
+}
+
+.signup form {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.signup input {
+width: 100%;
+box-sizing: border-box;
+padding: 12px;
+border: 1px solid pink;
+border-radius: 15px;
+}
+
+.signup button {
+padding: 12px;
+background-color: palevioletred;
+color: white;
+border: none;
+border-radius: 20px;
+}
+
+.coffee-art {
+width: 220px;
+max-width: 100%;
+height: auto;
+border-radius: 20px;
+}
+body {
+background-color: rgb(235, 192, 219);
+background-image:
+radial-gradient(circle at 10% 20%, #f5dce3 2px, transparent 3px),
+radial-gradient(circle at 90% 30%, #ead5bd 3px, transparent 4px),
+radial-gradient(circle at 20% 85%, #f5dce3 3px, transparent 4px),
+radial-gradient(circle at 85% 80%, #ead5bd 2px, transparent 3px);
+background-size: 100px 100px;
+}

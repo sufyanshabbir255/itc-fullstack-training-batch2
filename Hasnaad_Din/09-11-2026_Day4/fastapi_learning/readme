@@ -1,0 +1,15 @@
+# Change into the FastAPI project folder
+# This is where main.py and venv are located
+cd Day4\fastapi_learning
+
+# Activate the virtual environment (venv)
+# This tells VS Code to use the Python and packages
+# installed specifically for this project
+.\venv\Scripts\Activate.ps1
+
+# Start the FastAPI web server using Uvicorn
+# uvicorn      = the web server that runs FastAPI
+# main         = look inside main.py
+# app          = use app = FastAPI()
+# --reload     = automatically restart when files are saved
+uvicorn main:app --reload

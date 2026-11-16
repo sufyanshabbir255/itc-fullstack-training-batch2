@@ -1,0 +1,46 @@
+# requirements.txt
+
+# ---------------------------------------------------------------
+# requirements.txt
+# ---------------------------------------------------------------
+# fastapi[standard] installs FastAPI plus:
+#   - uvicorn      -> the ASGI server that actually runs the app
+#   - pydantic v2  -> data validation used by request/response models
+#   - httpx        -> used by FastAPI's TestClient in the tests
+#   - fastapi CLI  -> gives you the `fastapi dev` command
+# pytest is only needed to run the tests in /tests.
+# ---------------------------------------------------------------
+fastapi[standard]>=0.115.0
+pytest>=8.0.0
+
+# FastAPI
+# fastapi
+# uvicorn[standard]
+
+# Validation
+# pydantic
+email-validator
+
+# JWT Authentication
+python-jose[cryptography]
+
+# OAuth2 Forms
+python-multipart
+
+# Password Hashing
+passlib[bcrypt]
+bcrypt
+
+# PostgreSQL
+sqlalchemy
+psycopg[binary]
+
+# Environment Variables
+python-dotenv
+
+# Testing
+# pytest
+httpx
+
+# Redis (future refresh tokens / revocation)
+redis

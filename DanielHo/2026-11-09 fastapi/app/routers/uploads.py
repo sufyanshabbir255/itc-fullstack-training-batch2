@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Form, UploadFile, File
 
 router = APIRouter(
-    prefix  = "/forms"
+    prefix  = "/forms",
     tags    = ["Forms & Files"]
 )
 
-@router.port("/login")
+@router.post("/login")
 def login(
      username   : str = Form(...)
     ,password   : str = Form(...)

@@ -26,10 +26,14 @@ FastAPI builds that spec from:
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, status
-
+from fastapi import (
+    FastAPI, 
+    status,
+    Depends,
+)
 from app.core.config import settings
 from app.db.fake_db import seed_data
+from app.core.dependencies import log_request
 from app.routers import (
      api_router
     ,items
@@ -74,6 +78,12 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
     openapi_url="/openapi.json",
+
+    # Global dependency:
+    # Every request is now logged.
+    dependencies=[
+        Depends(log_request)
+    ]
 )
 
 # Plug in all versioned routes: /api/v1/items, /api/v1/users
@@ -101,3 +111,4 @@ def root():
 )
 def health():
     return {"status": "ok"}
+

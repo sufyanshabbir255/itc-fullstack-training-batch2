@@ -1,3 +1,5 @@
+# requirements.txt
+
 # ---------------------------------------------------------------
 # requirements.txt
 # ---------------------------------------------------------------
@@ -10,3 +12,35 @@
 # ---------------------------------------------------------------
 fastapi[standard]>=0.115.0
 pytest>=8.0.0
+
+# FastAPI
+# fastapi
+# uvicorn[standard]
+
+# Validation
+# pydantic
+email-validator
+
+# JWT Authentication
+python-jose[cryptography]
+
+# OAuth2 Forms
+python-multipart
+
+# Password Hashing
+passlib[bcrypt]
+bcrypt
+
+# PostgreSQL
+sqlalchemy
+psycopg[binary]
+
+# Environment Variables
+python-dotenv
+
+# Testing
+# pytest
+httpx
+
+# Redis (future refresh tokens / revocation)
+redis

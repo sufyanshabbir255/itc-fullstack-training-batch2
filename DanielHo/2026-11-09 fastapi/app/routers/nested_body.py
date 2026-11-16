@@ -1,10 +1,12 @@
+# \routers\nested_body.py
+
 from fastapi import APIRouter
 
 from app.schemas.order import Order
 
 router = APIRouter(
-    prefix  ="/orders"
-    tags    =["Nester Bodies"]
+    prefix  ="/orders",
+    tags    =["Nested Bodies"],
 )
 
 @router.post("/")

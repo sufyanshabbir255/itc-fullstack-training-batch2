@@ -26,11 +26,22 @@ FastAPI builds that spec from:
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, status
-
+from fastapi import (
+    FastAPI, 
+    status,
+    Depends,
+)
 from app.core.config import settings
 from app.db.fake_db import seed_data
-from app.routers import api_router
+from app.core.dependencies import log_request
+from app.routers import (
+     api_router
+    ,items
+    ,users
+    ,headers_cookies
+    ,nested_body
+    ,uploads
+)
 
 
 # ---------------------------------------------------------------------------
@@ -67,11 +78,21 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
     openapi_url="/openapi.json",
+
+    # Global dependency:
+    # Every request is now logged.
+    dependencies=[
+        Depends(log_request)
+    ]
 )
 
 # Plug in all versioned routes: /api/v1/items, /api/v1/users
 app.include_router(api_router, prefix=settings.API_V1_PREFIX)
-
+app.include_router(items.router)
+app.include_router(users.router)
+app.include_router(headers_cookies.router)
+app.include_router(nested_body.router)
+app.include_router(uploads.router)
 
 # ---------------------------------------------------------------------------
 # Routes can also be defined directly on `app` (no router) – fine for tiny
@@ -90,3 +111,4 @@ def root():
 )
 def health():
     return {"status": "ok"}
+

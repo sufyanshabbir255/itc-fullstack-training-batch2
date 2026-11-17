@@ -33,6 +33,7 @@ from app.db.fake_db import seed_data
 from app.routers import api_router
 from fastapi import Depends  # added by Din
 from app.dependencies import log_request  # added by Din
+from fastapi import Request  # added by Din
 
 
 # ---------------------------------------------------------------------------
@@ -75,6 +76,16 @@ app = FastAPI(
 # Plug in all versioned routes: /api/v1/items, /api/v1/users
 app.include_router(api_router, prefix=settings.API_V1_PREFIX)
 
+# added by Din: simple middleware that adds security headers to EVERY response
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    print(f"BEFORE: {request.method} {request.url.path}")
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    print("AFTER: security headers added")
+    return response
+
 
 # ---------------------------------------------------------------------------
 # Routes can also be defined directly on `app` (no router) – fine for tiny
@@ -93,3 +104,4 @@ def root():
 )
 def health():
     return {"status": "ok"}
+

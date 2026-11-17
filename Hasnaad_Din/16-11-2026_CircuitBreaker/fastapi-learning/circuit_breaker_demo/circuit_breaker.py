@@ -16,6 +16,8 @@ class CircuitBreaker:
                 self.state = "HALF_OPEN"
                 return True
             return False
+        if self.state == "HALF_OPEN":  # added by Din: only ONE trial request
+            return False
         return True
 
     def record_success(self):

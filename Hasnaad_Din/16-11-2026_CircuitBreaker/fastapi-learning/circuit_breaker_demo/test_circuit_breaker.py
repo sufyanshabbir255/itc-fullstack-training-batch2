@@ -57,3 +57,11 @@ def test_half_open_failure_reopens_circuit():
     response = client.get("/pay")
     assert response.json()["source"] == "fallback"
     assert response.json()["state"] == "OPEN"
+
+def test_half_open_allows_only_one_trial_request():  # added by Din
+    breaker = CircuitBreaker(failure_threshold=1, recovery_timeout=1)
+    breaker.record_failure()
+    time.sleep(1.1)
+    assert breaker.allow_request() is True
+    assert breaker.allow_request() is False
+    assert breaker.allow_request() is False

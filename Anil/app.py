@@ -38,7 +38,6 @@ init_db()
 def index():
   return render_template("index.html")
 
-
 # === NEW: Home Page Route ===
 @app.route("/home")
 def home():

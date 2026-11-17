@@ -33,18 +33,14 @@ def init_db():
 
 init_db()
 
-# Login / Signup Page
 @app.route("/")
 def index():
   return render_template("index.html")
 
-# === NEW: Home Page Route ===
 @app.route("/home")
 def home():
   return render_template("home.html")
 
-
-# Signup Route
 @app.route("/api/signup", methods=["POST"])
 def signup():
   data = request.json

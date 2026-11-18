@@ -34,6 +34,7 @@ from app.routers import api_router
 from fastapi import Depends  # added by Din
 from app.dependencies import log_request  # added by Din
 from fastapi import Request  # added by Din
+from fastapi.middleware.cors import CORSMiddleware  # added by Din
 
 
 # ---------------------------------------------------------------------------
@@ -85,6 +86,15 @@ async def add_security_headers(request: Request, call_next):
     response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     print("AFTER: security headers added")
     return response
+
+# added by Din: CORS - which websites (origins) may call this API from a browser
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500", "http://localhost:5500"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ---------------------------------------------------------------------------

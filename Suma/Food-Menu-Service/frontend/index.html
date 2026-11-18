@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Daily Menu</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="logo">The Daily Menu</div>
+
+<div class="nav-links">
+<a href="#">Home</a>
+<a href="#menu">Our Menu</a>
+<a href="#">My Cart (<span class="cart-count">0</span>)</a>
+</div>
+</nav>
+
+<section class="hero-section">
+<div class="hero-title">Fresh food, made with love.</div>
+<div class="hero-description">
+Discover delicious food for every mood.
+</div>
+</section>
+<section class="category-section">
+
+<div class="section-title">Explore Categories</div>
+
+<div class="category-list">
+
+<button class="category-button" data-category="all">All</button>
+<button class="category-button" data-category="burgers">Burgers</button>
+<button class="category-button" data-category="pizza">Pizza</button>
+<button class="category-button" data-category="pasta">Pasta</button>
+<button class="category-button" data-category="desserts">Desserts</button>
+
+ 
+</div>
+
+</section>
+<section class="food-section" id="menu">
+
+<div class="section-title">Our Popular Foods</div>
+
+<div class="food-list">
+
+<div class="food-card" data-category="burgers">
+<div class="food-image">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400" alt="Veg Burger">
+</div>
+<div class="food-name">Veg Burger</div>
+<div class="food-price">£5.99</div>
+<div class="food-quality">Quality: 95%</div>
+<div class="food-served">Served this week: 120</div>
+<button class="cart-button">Add to Cart</button>
+</div>
+
+<div class="food-card" data-category="pizza">
+<div class="food-image">
+<img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400" alt="Margherita Pizza">
+</div>
+<div class="food-name">Margherita Pizza</div>
+<div class="food-price">£8.99</div>
+<div class="food-quality">Quality: 92%</div>
+<div class="food-served">Served this week: 95</div>
+<button class="cart-button">Add to Cart</button>
+</div>
+
+<div class="food-card" data-category="pasta">
+<div class="food-image">
+<img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400" alt="Creamy Pasta">
+</div>
+<div class="food-name">Creamy Pasta</div>
+<div class="food-price">£7.50</div>
+<div class="food-quality">Quality: 90%</div>
+<div class="food-served">Served this week: 85</div>
+<button class="cart-button">Add to Cart</button>
+</div>
+
+</div>
+
+</section>
+<script src="script.js"></script>
+</body>
+</html>

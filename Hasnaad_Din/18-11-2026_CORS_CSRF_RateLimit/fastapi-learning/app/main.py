@@ -38,6 +38,9 @@ from fastapi.middleware.cors import CORSMiddleware  # added by Din
 import secrets  # added by Din
 from fastapi import HTTPException  # added by Din
 from fastapi.responses import JSONResponse  # added by Din
+from slowapi import Limiter, _rate_limit_exceeded_handler  # added by Din
+from slowapi.util import get_remote_address  # added by Din
+from slowapi.errors import RateLimitExceeded  # added by Din
 
 
 # ---------------------------------------------------------------------------
@@ -107,6 +110,12 @@ def verify_csrf(request: Request):
         raise HTTPException(status_code=403, detail="CSRF token missing or wrong")
 
 
+# added by Din: rate limiting - count requests per IP address
+limiter = Limiter(key_func=get_remote_address) # get_remote_address - counts each IP address
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+
 # ---------------------------------------------------------------------------
 # Routes can also be defined directly on `app` (no router) – fine for tiny
 # things like a root or health endpoint.
@@ -138,3 +147,9 @@ def get_csrf_token():
 @app.post("/transfer", tags=["Security"], dependencies=[Depends(verify_csrf)])
 def transfer():
     return {"message": "Transfer done - CSRF check passed"}
+
+# added by Din: max 3 requests per minute per IP, the 4th gets 429
+@app.get("/limited", tags=["Security"])
+@limiter.limit("3/minute")
+def limited(request: Request):
+    return {"message": "You are within the rate limit"}

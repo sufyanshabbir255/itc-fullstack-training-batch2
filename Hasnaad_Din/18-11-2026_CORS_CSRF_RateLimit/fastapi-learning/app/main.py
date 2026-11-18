@@ -35,6 +35,9 @@ from fastapi import Depends  # added by Din
 from app.dependencies import log_request  # added by Din
 from fastapi import Request  # added by Din
 from fastapi.middleware.cors import CORSMiddleware  # added by Din
+import secrets  # added by Din
+from fastapi import HTTPException  # added by Din
+from fastapi.responses import JSONResponse  # added by Din
 
 
 # ---------------------------------------------------------------------------
@@ -96,6 +99,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# added by Din: CSRF double-submit check - cookie and header must match
+def verify_csrf(request: Request):
+    cookie_token = request.cookies.get("csrf_token")
+    header_token = request.headers.get("X-CSRF-Token")
+    if not cookie_token or cookie_token != header_token:
+        raise HTTPException(status_code=403, detail="CSRF token missing or wrong")
+
 
 # ---------------------------------------------------------------------------
 # Routes can also be defined directly on `app` (no router) – fine for tiny
@@ -115,3 +125,16 @@ def root():
 def health():
     return {"status": "ok"}
 
+# added by Din: step 1 of CSRF - give the client a token (in the body AND as a cookie)
+@app.get("/csrf-token", tags=["Security"])
+def get_csrf_token():
+    token = secrets.token_hex(16)
+    response = JSONResponse({"csrf_token": token})
+    response.set_cookie("csrf_token", token)
+    return response
+
+
+# added by Din: step 2 of CSRF - this endpoint only works if cookie and header match
+@app.post("/transfer", tags=["Security"], dependencies=[Depends(verify_csrf)])
+def transfer():
+    return {"message": "Transfer done - CSRF check passed"}

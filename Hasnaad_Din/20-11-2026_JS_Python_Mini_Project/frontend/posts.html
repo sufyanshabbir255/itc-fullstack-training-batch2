@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My posts</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>Hello, <span id="who"></span></h1>
+    <button id="logout">Logout</button>
+
+    <h2>New post</h2>
+    <form id="post-form">
+      <input id="title" placeholder="Title" required>
+      <textarea id="content" placeholder="Write something" required></textarea>
+      <button type="submit">Save post</button>
+    </form>
+
+    <h2>My posts</h2>
+    <div id="posts"></div>
+  </div>
+  <script src="posts.js"></script>
+</body>
+</html>

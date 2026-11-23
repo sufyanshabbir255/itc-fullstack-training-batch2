@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h1>
+    Welcome {{ user.username }}
+</h1>
+
+<a href="/posts/create/{{ user.id }}">
+    Create Post
+</a>
+
+<hr>
+
+{% for post in posts %}
+
+<h3>{{ post.title }}</h3>
+
+<p>{{ post.content }}</p>
+
+<hr>
+
+{% endfor %}
+
+</body>
+</html>

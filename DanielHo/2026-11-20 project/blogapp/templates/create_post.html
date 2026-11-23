@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Post</title>
+</head>
+<body>
+
+<h1>Create Post</h1>
+
+<form method="POST">
+
+    <input
+        name="title"
+        placeholder="Title"
+    >
+
+    <br><br>
+
+    <textarea
+        name="content"
+        rows="5"
+        cols="40"
+    ></textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Save
+    </button>
+
+
+    <script>
+
+    async function savePost() {
+
+        const response = await fetch(
+            "/api/posts",
+        {
+           method: "POST",
+
+        headers: {
+            "Content-Type":
+            "application/json"
+        },
+
+            body: JSON.stringify({
+            title:
+            document.getElementById(
+            "title"
+            ).value,
+
+            content:
+            document.getElementById(
+            "content"
+            ).value,
+
+            user_id: 1
+            })
+        }
+    )
+
+    const result =
+    await response.json()
+
+    console.log(result)
+
+    }
+
+    </script>
+</form>
+
+</body>
+</html>

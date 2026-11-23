@@ -1,4 +1,15 @@
-from fastapi import FastAPI
+from fastapi import (
+    FastAPI,
+    Request,
+    Form,
+)
+
+from fastapi.templating import Jinja2Templates
+
+from fastapi.responses import (
+    RedirectResponse
+)
+
 from sqlalchemy.orm import Session
 
 from app.database import (
@@ -17,9 +28,11 @@ from app.models import (
     Post
 )
 
-
-
 app = FastAPI()
+
+templates = Jinja2Templates(
+    directory="app/templates"
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -91,3 +104,144 @@ def get_user_posts(user_id: int):
     )
 
     return posts
+
+@app.get("/signup")
+def signup_page(
+    request: Request
+):
+    return templates.TemplateResponse(
+        "signup.html",
+        {"request": request}
+    )
+
+@app.post("/signup")
+def signup(
+    username: str = Form(...),
+    email: str = Form(...),
+    password: str = Form(...)
+):
+
+    db = SessionLocal()
+
+    user = User(
+        username=username,
+        email=email,
+        password=password
+    )
+
+    db.add(user)
+
+    db.commit()
+
+    return RedirectResponse(
+        "/login",
+        status_code=302
+    )
+
+
+@app.get("/login")
+def login_page(
+    request: Request
+):
+    return templates.TemplateResponse(
+        "login.html",
+        {"request": request}
+    )
+
+@app.post("/login")
+def login(
+    email: str = Form(...),
+    password: str = Form(...)
+):
+
+    db = SessionLocal()
+
+    user = (
+        db.query(User)
+        .filter(
+            User.email == email,
+            User.password == password
+        )
+        .first()
+    )
+
+    if not user:
+        return RedirectResponse(
+            "/login",
+            status_code=302
+        )
+
+    return RedirectResponse(
+        f"/dashboard/{user.id}",
+        status_code=302
+    )
+
+
+@app.get("/dashboard/{user_id}")
+def dashboard(
+    user_id: int,
+    request: Request
+):
+
+    db = SessionLocal()
+
+    user = (
+        db.query(User)
+        .filter(User.id == user_id)
+        .first()
+    )
+
+    posts = (
+        db.query(Post)
+        .filter(Post.user_id == user_id)
+        .all()
+    )
+
+    return templates.TemplateResponse(
+        "dashboard.html",
+        {
+            "request": request,
+            "user": user,
+            "posts": posts
+        }
+    )
+
+
+@app.get("/posts/create/{user_id}")
+def create_post_page(
+    user_id: int,
+    request: Request
+):
+
+    return templates.TemplateResponse(
+        "create_post.html",
+        {
+            "request": request,
+            "user_id": user_id
+        }
+    )
+
+
+@app.post("/posts/create/{user_id}")
+def create_post(
+    user_id: int,
+    title: str = Form(...),
+    content: str = Form(...)
+):
+
+    db = SessionLocal()
+
+    post = Post(
+        title=title,
+        content=content,
+        user_id=user_id
+    )
+
+    db.add(post)
+
+    db.commit()
+
+    return RedirectResponse(
+        f"/dashboard/{user_id}",
+        status_code=302
+    )

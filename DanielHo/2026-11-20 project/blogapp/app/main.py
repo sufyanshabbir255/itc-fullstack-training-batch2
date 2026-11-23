@@ -7,9 +7,15 @@ from app.database import (
     ,SessionLocal
 )
 
-from app.schemas import UserCreate
+from app.schemas import (
+    UserCreate,
+    PostCreate
+)
 
-from app.models import User
+from app.models import (
+    User,
+    Post
+)
 
 
 
@@ -43,3 +49,45 @@ def create_user(user: UserCreate):
     db.refresh(new_user)
 
     return new_user
+
+
+@app.post("/posts")
+def create_post(post: PostCreate):
+
+    db: Session = SessionLocal()
+
+    new_post = Post(
+        title=post.title,
+        content=post.content,
+        user_id=post.user_id
+    )
+
+    db.add(new_post)
+
+    db.commit()
+
+    db.refresh(new_post)
+
+    return new_post
+
+@app.get("/posts")
+def get_posts():
+
+    db: Session = SessionLocal()
+
+    posts = db.query(Post).all()
+
+    return posts
+
+@app.get("/users/{user_id}/posts")
+def get_user_posts(user_id: int):
+
+    db: Session = SessionLocal()
+
+    posts = (
+        db.query(Post)
+        .filter(Post.user_id == user_id)
+        .all()
+    )
+
+    return posts

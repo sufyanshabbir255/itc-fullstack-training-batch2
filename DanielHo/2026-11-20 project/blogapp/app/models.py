@@ -1,8 +1,12 @@
-from sqlalchemy import String
+from sqlalchemy import (
+    String,
+    ForeignKey
+)
 
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
+    relationship
 )
 
 from app.database import Base
@@ -25,3 +29,29 @@ class User(Base):
     )
 
     password: Mapped[str]
+
+    posts = relationship(
+        "Post",
+        back_populates="owner"
+    )
+
+
+class Post(Base):
+    __tablename__ = "posts"
+
+    id: Mapped[int] = mapped_column(
+        primary_key=True
+    )
+
+    title: Mapped[str]
+
+    content: Mapped[str]
+
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id")
+    )
+
+    owner = relationship(
+        "User",
+        back_populates="posts"
+    )

@@ -1,35 +1,61 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Login</title>
-</head>
 <body>
 
 <h1>Login</h1>
 
-<form method="POST">
+<input
+    id="email"
+    type="email"
+    placeholder="Email"
+>
 
-    <input
-        type="email"
-        name="email"
-        placeholder="Email"
-    >
+<input
+    id="password"
+    type="password"
+    placeholder="Password"
+>
 
-    <br><br>
+<button onclick="login()">
+    Login
+</button>
 
-    <input
-        type="password"
-        name="password"
-        placeholder="Password"
-    >
+<script>
 
-    <br><br>
+async function login() {
 
-    <button type="submit">
-        Login
-    </button>
+    const response = await fetch(
+        "/api/login",
+        {
+            method: "POST",
 
-</form>
+            headers: {
+                "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+                email:
+                    document.getElementById(
+                        "email"
+                    ).value,
+
+                password:
+                    document.getElementById(
+                        "password"
+                    ).value
+            })
+        }
+    )
+
+    const data =
+        await response.json()
+
+    console.log(data)
+
+}
+
+</script>
 
 </body>
 </html>

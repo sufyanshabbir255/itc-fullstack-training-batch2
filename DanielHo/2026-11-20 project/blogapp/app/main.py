@@ -10,6 +10,10 @@ from fastapi.responses import (
     RedirectResponse
 )
 
+from fastapi.middleware.cors import (
+    CORSMiddleware
+)
+
 from sqlalchemy.orm import Session
 
 from app.database import (
@@ -28,6 +32,8 @@ from app.models import (
     Post
 )
 
+from pydantic import BaseModel
+
 app = FastAPI()
 
 templates = Jinja2Templates(
@@ -35,6 +41,20 @@ templates = Jinja2Templates(
 )
 
 Base.metadata.create_all(bind=engine)
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5050"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+    )
 
 
 @app.get("/")
@@ -245,3 +265,55 @@ def create_post(
         f"/dashboard/{user_id}",
         status_code=302
     )
+
+@app.post("/api/login")
+def login(
+    request: LoginRequest
+):
+
+    db = SessionLocal()
+
+    user = (
+        db.query(User)
+        .filter(
+            User.email == request.email,
+            User.password == request.password
+        )
+        .first()
+    )
+
+    if not user:
+
+        return {
+            "success": False
+        }
+
+    return {
+        "success": True,
+        "user_id": user.id
+    }
+
+
+@app.post("/api/posts")
+def create_post(
+    post: PostCreate
+):
+
+    db = SessionLocal()
+
+    new_post = Post(
+        title=post.title,
+        content=post.content,
+        user_id=post.user_id
+    )
+
+    db.add(new_post)
+
+    db.commit()
+
+    db.refresh(new_post)
+
+    return {
+        "success": True,
+        "post_id": new_post.id
+    }

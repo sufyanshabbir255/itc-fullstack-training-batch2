@@ -1,73 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Post</title>
-</head>
-<body>
+<input id="title">
 
-<h1>Create Post</h1>
+<textarea id="content"></textarea>
 
-<form method="POST">
+<button onclick="savePost()">
+    Save
+</button>
 
-    <input
-        name="title"
-        placeholder="Title"
-    >
+<script>
 
-    <br><br>
+async function savePost() {
 
-    <textarea
-        name="content"
-        rows="5"
-        cols="40"
-    ></textarea>
-
-    <br><br>
-
-    <button type="submit">
-        Save
-    </button>
-
-
-    <script>
-
-    async function savePost() {
-
-        const response = await fetch(
-            "/api/posts",
+    const response = await fetch(
+        "/api/posts",
         {
-           method: "POST",
+            method: "POST",
 
-        headers: {
-            "Content-Type":
-            "application/json"
-        },
+            headers: {
+                "Content-Type":
+                "application/json"
+            },
 
             body: JSON.stringify({
-            title:
-            document.getElementById(
-            "title"
-            ).value,
+                title:
+                    document.getElementById(
+                        "title"
+                    ).value,
 
-            content:
-            document.getElementById(
-            "content"
-            ).value,
+                content:
+                    document.getElementById(
+                        "content"
+                    ).value,
 
-            user_id: 1
+                user_id: 1
             })
         }
     )
 
     const result =
-    await response.json()
+        await response.json()
 
     console.log(result)
 
-    }
+}
 
-    </script>
-</form>
-
-</body>
-</html>
+</script>

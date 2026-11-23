@@ -23,3 +23,5 @@ class User(Base):
         String(255),
         unique=True
     )
+
+    password: Mapped[str]

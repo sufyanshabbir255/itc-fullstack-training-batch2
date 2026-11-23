@@ -2,13 +2,16 @@ from fastapi import FastAPI
 from sqlalchemy.orm import Session
 
 from app.database import (
-    Base,
-    engine,
-    SessionLocal,
+    Base
+    ,engine
+    ,SessionLocal
 )
 
-from app.models import User
 from app.schemas import UserCreate
+
+from app.models import User
+
+
 
 app = FastAPI()
 
@@ -18,7 +21,7 @@ Base.metadata.create_all(bind=engine)
 @app.get("/")
 def home():
     return {
-        "message": "FastAPI + PostgreSQL Running"
+        "message": "Running"
     }
 
 
@@ -30,10 +33,13 @@ def create_user(user: UserCreate):
     new_user = User(
         username=user.username,
         email=user.email,
+        password=user.password
     )
 
     db.add(new_user)
+
     db.commit()
+
     db.refresh(new_user)
 
     return new_user

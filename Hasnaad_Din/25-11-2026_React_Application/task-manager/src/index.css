@@ -1,0 +1,8 @@
+/* whole page: grey background, nicer font */
+body {
+  margin: 0;
+  background: #f4f5f8;
+  font-family: Arial, sans-serif;
+  color: #111827;
+  background-color: lightgrey;
+}

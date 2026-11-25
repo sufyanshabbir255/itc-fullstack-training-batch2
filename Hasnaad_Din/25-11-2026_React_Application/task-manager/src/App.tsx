@@ -1,4 +1,5 @@
 import { useState } from "react"; //used to create hooks
+import TaskItem from "./TaskItem.tsx";
 
 // describe what a task looks like
 type Task = {
@@ -11,7 +12,10 @@ function App() {
   const [tasks, setTasks] = useState<Task[]>([]); //list of tasks, default is empty
   const [text, setText] = useState<string>("");
   const [priority, setPriority] = useState<string>("Low");
-  const today: string = new Date().toLocaleDateString("en-GB");
+  const today: string = new Date().toLocaleDateString("en-GB", {
+    month: "long",
+    year: "numeric",
+  });
 
   function addTask() {
     if (text === "") return;
@@ -31,6 +35,7 @@ function App() {
           border: "1px solid grey",
           borderRadius: "8px",
           padding: "10px",
+          backgroundColor: "white",
         }}
       >
         <input
@@ -41,17 +46,13 @@ function App() {
         />
         <select value={priority} onChange={(e) => setPriority(e.target.value)}>
           <option>High</option>
-
           <option>Medium</option>
-
           <option>Low</option>
         </select>
-        <button onClick={addTask}>Add task</button>
+        <button onClick={addTask}>+ Add task</button>
         <ul>
           {tasks.map((task) => (
-            <li key={task.id}>
-              {task.text} ({task.priority})
-            </li>
+            <TaskItem key={task.id} text={task.text} priority={task.priority} />
           ))}
         </ul>
       </div>

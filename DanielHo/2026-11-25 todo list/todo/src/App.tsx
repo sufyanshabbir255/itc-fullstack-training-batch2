@@ -70,6 +70,16 @@ function App() {
         }));
     };
 
+    const toggleTask = (id: number) => {
+    setTasks((prev) =>
+        prev.map((task) =>
+            task.id === id
+                ? { ...task, isComplete: !task.isComplete }
+                : task
+        )
+    );
+};
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -92,6 +102,12 @@ function App() {
         });
     };
 
+    const deleteTask = (id: number) => {
+    setTasks((prev) =>
+        prev.filter((task) => task.id !== id)
+    );
+};
+
     const totalTask = tasks.length;
 
     const totalCompleted = tasks.filter(
@@ -102,7 +118,8 @@ function App() {
         <div>
             <h2>{currentDate}</h2>
             <h1>My Tasks</h1>
-
+            
+ {/* Create a new task: */}
             <form onSubmit={handleSubmit}>
                 <label>New Task</label>
                 <br />
@@ -114,8 +131,6 @@ function App() {
                     onChange={handleChange}
                     placeholder="What needs to be done?"
                 />
-
-                <br />
                 <br />
 
                 <label>Priority</label>
@@ -130,32 +145,36 @@ function App() {
                     <option value="Medium">Medium</option>
                     <option value="Low">Low</option>
                 </select>
-
-                <br />
                 <br />
 
                 <button type="submit">
                     Add task
                 </button>
             </form>
-
             <hr />
 
-            <ul>
-                {tasks.map((task) => (
-                    <li key={task.id}>
-                        {task.isComplete ? (
-                            <s>
-                                {task.text} | {task.priority}
-                            </s>
-                        ) : (
-                            <>
-                                {task.text} | {task.priority}
-                            </>
-                        )}
-                    </li>
-                ))}
-            </ul>
+
+{/* Display all tasks: */}
+            <table>
+                <tbody>
+                    {tasks.map(item => {
+                        return (
+                            <tr key={item.id}>
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        checked={item.isComplete}
+                                        onChange={() => toggleTask(item.id)}
+                                    />
+                                </td>
+                                <td>{item.text}</td>
+                                <td>{item.priority}</td>
+                                <td><button onClick={() => deleteTask(item.id)}>🗑</button></td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
 
             <p>
                 Completed Tasks: {totalCompleted}/{totalTask}

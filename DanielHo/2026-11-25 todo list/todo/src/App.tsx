@@ -67,7 +67,7 @@ function App() {
         setTaskData((prev) => ({
             ...prev,
             [name]: value,
-        }));
+        }) as TaskData);
     };
 
     const toggleTask = (id: number) => {
@@ -88,7 +88,7 @@ function App() {
         }
 
         const newTask: Task = {
-            id: tasks.length + 1,
+            id: Date.now(),
             text: taskData.task,
             priority: taskData.priority,
             isComplete: false,
@@ -109,16 +109,18 @@ function App() {
 };
 
     const totalTask = tasks.length;
-
     const totalCompleted = tasks.filter(
         (task) => task.isComplete
     ).length;
+    const totalRemaining = totalTask - totalCompleted
 
     return (
         <div>
             <h2>{currentDate}</h2>
             <h1>My Tasks</h1>
-            
+            <p>
+                {totalCompleted} of {totalTask} completed
+            </p>      
  {/* Create a new task: */}
             <form onSubmit={handleSubmit}>
                 <label>New Task</label>
@@ -156,6 +158,14 @@ function App() {
 
 {/* Display all tasks: */}
             <table>
+                <thead>
+                    <tr>
+                        <th>Done</th>
+                        <th>Task</th>
+                        <th>Priority</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
                 <tbody>
                     {tasks.map(item => {
                         return (
@@ -167,9 +177,20 @@ function App() {
                                         onChange={() => toggleTask(item.id)}
                                     />
                                 </td>
-                                <td>{item.text}</td>
+                                <td>
+                                    {item.isComplete ? (
+                                        <s>{item.text}</s>
+                                    ) : (
+                                        item.text
+                                    )};
+                                </td>
                                 <td>{item.priority}</td>
-                                <td><button onClick={() => deleteTask(item.id)}>🗑</button></td>
+                                <td><button 
+                                    type = "button" 
+                                    onClick={() => deleteTask(item.id)}
+                                >
+                                    🗑
+                                </button></td>
                             </tr>
                         );
                     })}
@@ -177,7 +198,7 @@ function App() {
             </table>
 
             <p>
-                Completed Tasks: {totalCompleted}/{totalTask}
+                {totalRemaining} tasks left
             </p>
         </div>
     );

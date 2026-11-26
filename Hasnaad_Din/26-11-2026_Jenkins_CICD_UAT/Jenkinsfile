@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_DIR = 'Hasnaad_Din/26-11-2026_Docker_FastAPI/fastapi-learning'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                dir(APP_DIR) {
+                    sh 'docker build -t fastapi-learning:uat .'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'docker run --rm -e SECRET_KEY=test -e REFRESH_SECRET_KEY=test fastapi-learning:uat pytest'
+            }
+        }
+
+        stage('Deploy to UAT') {
+            steps {
+                withCredentials([file(credentialsId: 'uat-env', variable: 'ENV_FILE')]) {
+                    sh 'docker rm -f fastapi-uat || true'
+                    sh 'docker run -d --name fastapi-uat --env-file $ENV_FILE -p 8001:8000 fastapi-learning:uat'
+                }
+            }
+        }
+    }
+}
